@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+declare var alertify: any;
 
 @Component({
   selector: 'app-layout',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./layout.component.css']
 })
 export class LayoutComponent {
+    constructor() { }
 
+    ngOnInit(): void {
+      alertify.success("ready!")
+    }
 }
