@@ -7,15 +7,25 @@ declare var alertify: any;
 export class AlertifyService {
   constructor() { }
 
-  message(message: string, messageType: MesssageType, position : Position, delay: number){
-    alertify.set('notifier', 'delay', delay)
-    alertify.set('notifier', 'position', position)
-    alertify[messageType](message);
+  //message(message: string, messageType: MesssageType, position : Position, delay: number)
+  message(message: string, options: AlertifyOptions){
+    alertify.set('notifier', 'delay', options.delay)
+    alertify.set('notifier', 'position', options.position)
+    const msj = alertify[options.messageType](message);
+    if (options.dismissOthers)
+       msj.dismissOthers();
   }
 
   dismiss(){
     alertify.dismissAll();
   }
+}
+
+export class AlertifyOptions {
+  messageType: MesssageType = MesssageType.Message;
+  position: Position = Position.BottomLeft;
+  delay: number = 3;
+  dismissOthers: boolean = false;
 }
 
 export enum MesssageType {
