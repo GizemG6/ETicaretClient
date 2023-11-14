@@ -22,19 +22,43 @@ export class HttpClientService {
     else
        url = `${this.url(requestParameter)}${id ? `/${id}` : ""}`;
 
-    return this.httpClient.get<T>(url, { headers: requestParameter.headers })
+    return this.httpClient.get<T>(url, { headers: requestParameter.headers });
   }
 
-  post() {
+  post<T>(requestParameter: Partial<RequestParameters>, body: Partial<T>): Observable<T> {
+    let url: string = "";
+    
+    if (requestParameter.fullEndPoint)
+       url = requestParameter.fullEndPoint;
 
+    else
+       url = `${this.url(requestParameter)}`;
+
+    return this.httpClient.post<T>(url, body, { headers: requestParameter.headers });
   }
 
-  put() {
+  put<T>(requestParameter: Partial<RequestParameters>, body: Partial<T>): Observable<T> {
+    let url: string = "";
+    
+    if (requestParameter.fullEndPoint)
+       url = requestParameter.fullEndPoint;
 
+    else
+       url = `${this.url(requestParameter)}`;
+
+    return this.httpClient.put<T>(url, body, { headers: requestParameter.headers });
   }
 
-  delete() {
+  delete<T>(requestParameter: Partial<RequestParameters>, id: string): Observable<T> {
+    let url: string = "";
+    
+    if (requestParameter.fullEndPoint)
+       url = requestParameter.fullEndPoint;
 
+    else
+       url = `${this.url(requestParameter)}/${id}`;
+
+    return this.httpClient.delete<T>(url, { headers: requestParameter.headers });
   }
 }
 
