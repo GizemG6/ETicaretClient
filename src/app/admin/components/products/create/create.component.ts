@@ -34,6 +34,8 @@ export class CreateComponent extends BaseComponent implements OnInit{
         position: Position.TopRight,
         delay: 0
       });
+    }, errorMessage => {
+      console.log()
     });
   }
 }
