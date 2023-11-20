@@ -26,6 +26,28 @@ export class CreateComponent extends BaseComponent implements OnInit{
     create_product.stock = parseInt(stock.value);
     create_product.price = parseFloat(price.value);
 
+    if (!name.value) {
+      this.alerfity.message("Lütfen ürün adini giriniz.",
+        {
+          dismissOthers: true,
+          messageType: MesssageType.Error,
+          position: Position.TopRight,
+          delay: 0
+        });
+        return;
+    }
+
+    if (parseInt(stock.value) < 0) {
+      this.alerfity.message("Lütfen stok bilgisini doğru giriniz.",
+        {
+          dismissOthers: true,
+          messageType: MesssageType.Error,
+          position: Position.TopRight,
+          delay: 0
+        });
+        return;
+    }
+
     this.productService.create(create_product, () => {
       this.hideSpinner(SpinnerType.BallAtom);
       this.alerfity.message("Urun basariyla eklendi", {
@@ -35,7 +57,13 @@ export class CreateComponent extends BaseComponent implements OnInit{
         delay: 0
       });
     }, errorMessage => {
-      console.log()
+      this.alerfity.message(errorMessage,
+        {
+          dismissOthers: true,
+          messageType: MesssageType.Error,
+          position: Position.TopRight,
+          delay: 0
+        });
     });
   }
 }
