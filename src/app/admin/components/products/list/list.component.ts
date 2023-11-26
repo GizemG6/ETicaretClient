@@ -8,6 +8,7 @@ import { ProductService } from 'src/app/services/common/models/product.service';
 import { supportsPassiveEventListeners } from '@angular/cdk/platform';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
+declare var $: any;
 
 @Component({
   selector: 'app-list',
@@ -19,7 +20,7 @@ export class ListComponent extends BaseComponent implements OnInit , AfterViewIn
   {
     super(spinner)
   }
-  displayedColumns: string[] = ['name', 'stock', 'price', 'createdDate', 'updateDate'];
+  displayedColumns: string[] = ['name', 'stock', 'price', 'createdDate', 'updateDate', 'delete'];
   dataSource :MatTableDataSource<List_Product> = null;
   @ViewChild(MatPaginator) paginator : MatPaginator;
 
@@ -37,6 +38,11 @@ export class ListComponent extends BaseComponent implements OnInit , AfterViewIn
     this.paginator.length = allProducts.totalCount;
     this.dataSource.paginator = this.paginator;
   }
+
+  /* delete(id, event) {
+    const img: HTMLImageElement = event.srcElement;
+    $(img.parentElement.parentElement).fadeOut(2000);
+  } */
 
   async pageChanged() {
     await this.getProducts();
