@@ -30,15 +30,13 @@ export class ProductService {
 
    async read(page: number = 0, size: number = 5, successCallBack?: () => void, errorCallBack?: 
    (errorMessage: string) => void): Promise<{ totalCount: number; products: List_Product[] }> {
-    const promiseData: Promise<{ totalCount: number; products: List_Product[] }> = this.httpClientService.get<{ totalCount: number; products: List_Product[] }>({
+    const promiseData: Observable<{ totalCount: number; products: List_Product[] }> = this.httpClientService.get<{ totalCount: number; products: List_Product[] }>({
       controller:"products",
       queryString: `page=${page}&size=${size}`
-    }).toPromise();
-
-    promiseData.then(d => successCallBack())
-       .catch((errorResponse: HttpErrorResponse) => errorCallBack(errorResponse.message))
-
-    return await promiseData;
+    });
+    const response: {totalCount: number; products: List_Product[] }  = await firstValueFrom(promiseData);
+    successCallBack();
+    return response;
    }
 
    async delete(id:string) {
