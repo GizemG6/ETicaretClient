@@ -1,3 +1,5 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { AlertifyService, MesssageType, Position } from './../../services/admin/alertify.service';
 import { Directive, ElementRef, Renderer2, HostListener, Input, EventEmitter, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -13,7 +15,12 @@ declare var $:any;
 })
 export class DeleteDirective{
 
-  constructor(private element: ElementRef, private _renderer: Renderer2, private productService: ProductService, private spinner: NgxSpinnerService, public dialog: MatDialog) 
+  constructor(private element: ElementRef,
+    private _renderer: Renderer2,
+    private httpClienService: HttpClientService,
+    private spinner: NgxSpinnerService,
+    public dialog: MatDialog,
+    private alertifyService: AlertifyService) 
   {
     const img = _renderer.createElement("img");
     img.setAttribute("src","../../../../../assets/delete.png");
@@ -24,6 +31,7 @@ export class DeleteDirective{
    }
 
    @Input() id: string;
+   @Input() controller: string;
    @Output() callback :EventEmitter<any> = new EventEmitter();
    
    @HostListener("click")
@@ -31,14 +39,31 @@ export class DeleteDirective{
     this.openDialog(async () => {
       this.spinner.show(SpinnerType.BallAtom);
      const td: HTMLTableCellElement = this.element.nativeElement;
-     await this.productService.delete(this.id);
+     this.httpClienService.delete({
+      controller: this.controller
+     }, this.id).subscribe(data => {
      $(td.parentElement).animate({
       opacity: 0,
       left: "+50",
       height: "toogle"
      }, 700, () => {
-      this.callback.emit();
+      this.callback.emit()
+      this.alertifyService.message("Ürün başarıyla silinmiştir.", {
+        dismissOthers: true,
+        messageType: MesssageType.Success,
+        position: Position.TopRight,
+        delay: 0
+      })
      });
+    }, (errorResponse: HttpErrorResponse) => {
+      this.spinner.hide(SpinnerType.BallAtom);
+      this.alertifyService.message("Ürün silinirken beklenmeyen bir hatayla karşılaşılmıştır.", {
+        dismissOthers: true,
+        messageType: MesssageType.Error,
+        position: Position.TopRight,
+        delay: 0
+      })
+    });
     });
    }
   
