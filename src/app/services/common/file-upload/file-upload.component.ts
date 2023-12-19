@@ -42,7 +42,7 @@ export class FileUploadComponent {
           action: this.options.action,
           queryString: this.options.queryString,
           headers: new HttpHeaders({ "responseType": "blob"})
-        }, fileData).subscribe(data => {
+        }, fileData).subscribe(data => {     //subscribe??
     
           const message: string = "Dosyalar başarıyla yüklenmiştir.";
           if(this.options.isAdminPage) {
