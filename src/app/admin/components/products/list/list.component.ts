@@ -20,7 +20,7 @@ export class ListComponent extends BaseComponent implements OnInit , AfterViewIn
   {
     super(spinner)
   }
-  displayedColumns: string[] = ['name', 'stock', 'price', 'createdDate', 'updateDate', 'delete'];
+  displayedColumns: string[] = ['name', 'stock', 'price', 'createdDate', 'updateDate', 'photos', 'edit', 'delete'];
   dataSource :MatTableDataSource<List_Product> = null;
   @ViewChild(MatPaginator) paginator : MatPaginator;
 
