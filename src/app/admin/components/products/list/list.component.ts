@@ -7,6 +7,8 @@ import { List_Product } from 'src/app/contracts/list_product';
 import { ProductService } from 'src/app/services/common/models/product.service';
 import { supportsPassiveEventListeners } from '@angular/cdk/platform';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { DialogService } from 'src/app/services/common/dialog.service';
+import { SelectProductImageDialogComponent } from 'src/app/dialogs/select-product-image-dialog/select-product-image-dialog.component';
 
 declare var $: any;
 
@@ -16,7 +18,10 @@ declare var $: any;
   styleUrls: ['./list.component.css']
 })
 export class ListComponent extends BaseComponent implements OnInit , AfterViewInit{
-  constructor(spinner: NgxSpinnerService, private productService: ProductService, private AlertifyService: AlertifyService)
+  constructor(spinner: NgxSpinnerService, 
+  private productService: ProductService,
+  private AlertifyService: AlertifyService,
+  private dialogService: DialogService)
   {
     super(spinner)
   }
@@ -43,6 +48,16 @@ export class ListComponent extends BaseComponent implements OnInit , AfterViewIn
     const img: HTMLImageElement = event.srcElement;
     $(img.parentElement.parentElement).fadeOut(2000);
   } */
+
+  addProductImages(id: string) {
+     this.dialogService.openDialog({
+      componentType: SelectProductImageDialogComponent,
+      data: id,
+      options: {
+        width: "1400px"
+      }
+     })
+  }
 
   async pageChanged() {
     await this.getProducts();

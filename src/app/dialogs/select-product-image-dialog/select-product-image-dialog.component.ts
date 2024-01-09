@@ -1,4 +1,5 @@
-import { Component, Inject } from '@angular/core';
+import { FileUploadOptions } from './../../services/common/file-upload/file-upload.component';
+import { Component, Inject, Output } from '@angular/core';
 import { BaseDialog } from '../base/base-dialog';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
@@ -9,10 +10,16 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 })
 export class SelectProductImageDialogComponent extends BaseDialog<SelectProductImageDialogComponent> {
   constructor(dialogRef: MatDialogRef<SelectProductImageDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: SelectProductImageState,)
+    @Inject(MAT_DIALOG_DATA) public data: SelectProductImageState | string,)
     {
       super(dialogRef)
     }
+
+    @Output() options: Partial<FileUploadOptions> = {
+      accept: ".png, .jpg, .jpeg, .gif",
+      action: "upload",
+      controller: "products"
+    };
 }
 
 export enum SelectProductImageState {

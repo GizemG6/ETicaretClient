@@ -18,8 +18,7 @@ import { SelectProductImageDialogComponent } from './dialogs/select-product-imag
 
 @NgModule({
   declarations: [
-    AppComponent,
-    SelectProductImageDialogComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
