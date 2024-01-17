@@ -5,6 +5,8 @@ import { OrdersComponent } from './orders/orders.component';
 import { OrdersModule } from './orders/orders.module';
 import { CustomersModule } from './customers/customers.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { HomeModule } from 'src/app/ui/components/home/home.module';
+import { BasketsModule } from 'src/app/ui/components/baskets/baskets.module';
 
 
 
@@ -13,9 +15,8 @@ import { DashboardModule } from './dashboard/dashboard.module';
   imports: [
     CommonModule,
     ProductsModule,
-    OrdersModule,
-    CustomersModule,
-    DashboardModule
+    HomeModule,
+    BasketsModule
   ]
 })
 export class ComponentsModule { }
