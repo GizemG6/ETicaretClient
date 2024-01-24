@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -13,11 +13,31 @@ export class RegisterComponent implements OnInit{
   frm: FormGroup;
   ngOnInit(): void {
     this.frm = this.formBuilder.group({
-      adSoyad: [""],
-      kullaniciAdi: [""],
-      email: [""],
+      adSoyad: ["", [
+        Validators.required,
+        Validators.maxLength(50),
+        Validators.minLength(3)
+      ]],
+      kullaniciAdi: ["", [
+        Validators.required,
+        Validators.maxLength(50),
+        Validators.minLength(3)
+      ]],
+      email: ["", [
+        Validators.required,
+        Validators.maxLength(250),
+        Validators.email
+      ]],
       sifre: [""],
       sifreTekrar: [""]
     })
+  }
+
+  get component() {
+    return this.frm.controls;
+  }
+
+  onSubmit(data: any) {
+    debugger;
   }
 }
