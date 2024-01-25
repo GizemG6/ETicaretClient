@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ValidationErrors } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators, ValidationErrors } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent } from 'src/app/base/base.component';
 
@@ -40,7 +40,7 @@ export class RegisterComponent extends BaseComponent implements OnInit{
     })
   }
 
-  get component() {
+  get component(): { [key: string]: AbstractControl} {
     return this.form.controls;
   }
 
