@@ -26,10 +26,13 @@ export class RegisterComponent extends BaseComponent implements OnInit{
         Validators.maxLength(50),
         Validators.minLength(3)
       ]],
-      password: ["", [
+      email: ["", [
         Validators.required,
         Validators.maxLength(250),
         Validators.email
+      ]],
+      password : ["", [
+        Validators.required,
       ]],
       passwordConfirm : ["", [
         Validators.required,
