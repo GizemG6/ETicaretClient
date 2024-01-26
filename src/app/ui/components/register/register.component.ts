@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators, ValidationErrors } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent } from 'src/app/base/base.component';
+import { User } from 'src/app/entities/user';
 
 @Component({
   selector: 'app-register',
@@ -53,7 +54,7 @@ export class RegisterComponent extends BaseComponent implements OnInit{
   }
 
   submitted: boolean = false;
-  onSubmit(data: any) {
+  onSubmit(data: User) {
     this.submitted = true;
     if (this.form.invalid)
       return;
