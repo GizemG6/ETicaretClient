@@ -37,6 +37,14 @@ export class RegisterComponent extends BaseComponent implements OnInit{
       passwordConfirm : ["", [
         Validators.required,
       ]]
+    },
+    {
+      validators: (group: AbstractControl): ValidationErrors | null => 
+      {
+        let sifre = group.get("password").value;
+        let sifreTekrar = group.get("passwordConfirm").value;
+        return sifre === sifreTekrar ? null : { notSame: true };
+      }
     })
   }
 
