@@ -5,7 +5,7 @@ import { BaseComponent } from 'src/app/base/base.component';
 import { User } from 'src/app/entities/user';
 import { Create_User } from 'src/app/contracts/users/create_user';
 import { UserService } from 'src/app/services/common/models/user.service';
-import { CustomToastrService, ToastrMessageType } from 'src/app/services/ui/custom-toastr.service';
+import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
 import { group } from '@angular/animations';
 import { ToastrService } from 'ngx-toastr';
 
@@ -69,6 +69,17 @@ export class RegisterComponent extends BaseComponent implements OnInit{
       return
 
     const result: Create_User = await this.userService.create(user);
+
+    if (result.succeeded)
+      this.toastrService.message(result.message, "Kullanıcı Kaydı Başarılı", {
+    messageType: ToastrMessageType.Success,
+    position: ToastrPosition.TopRight
+  })
+    else
+      this.toastrService.message(result.message, "Hata", {
+    messageType: ToastrMessageType.Error,
+    position: ToastrPosition.TopRight
+  })
 
   }
 }
