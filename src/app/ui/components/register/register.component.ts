@@ -3,6 +3,11 @@ import { AbstractControl, FormBuilder, FormGroup, Validators, ValidationErrors }
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent } from 'src/app/base/base.component';
 import { User } from 'src/app/entities/user';
+import { Create_User } from 'src/app/contracts/users/create_user';
+import { UserService } from 'src/app/services/common/models/user.service';
+import { CustomToastrService, ToastrMessageType } from 'src/app/services/ui/custom-toastr.service';
+import { group } from '@angular/animations';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -10,7 +15,10 @@ import { User } from 'src/app/entities/user';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent extends BaseComponent implements OnInit{
-  constructor(private formBuilder: FormBuilder, spinner: NgxSpinnerService) {
+  constructor(private formBuilder: FormBuilder, 
+    private userService: UserService, 
+    private toastrService: CustomToastrService, 
+    spinner: NgxSpinnerService) {
     super(spinner)
   }
 
@@ -54,9 +62,13 @@ export class RegisterComponent extends BaseComponent implements OnInit{
   }
 
   submitted: boolean = false;
-  onSubmit(data: User) {
+  async onSubmit(user: User) {
     this.submitted = true;
-    if (this.form.invalid)
-      return;
+    
+    if(this.form.invalid)
+      return
+
+    const result: Create_User = await this.userService.create(user);
+
   }
 }
